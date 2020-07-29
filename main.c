@@ -8,6 +8,7 @@
 #include <curses.h>
 
 #include "window.h"
+#include "dialog.h"
 
 /// - [ ] fileio.h / fileio.c
 /// 
@@ -18,13 +19,13 @@
 int main(int argc, char ** argv)
 {
 	InitWindow();
-    attron(A_BOLD);
-	move(5, 15);
-	printw("Hello, brave new curses world!\n");
-	attroff(A_BOLD);attron(A_BLINK);
-	move(7, 16);
-	printw("Press any key to continue...");
-	refresh();
+
+    
+    char title[] = "Hello, brave new curses world!\n",
+         msg[]   = "Press any key to continue..."    ;
+    
+    DlgShowMsg( 5, 15, title, msg);
+
 	getch();
 	endwin();
 	exit(EXIT_SUCCESS);

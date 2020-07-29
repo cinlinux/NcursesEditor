@@ -6,11 +6,12 @@ LN=ncurses
 
 HDR=\
 	window.h\
-	*.h
+	dialog.h
 
 SRC=\
 	main.c\
-	window.c
+	window.c\
+	dialog.c
 
 
 all:
