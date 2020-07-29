@@ -7,22 +7,18 @@
 #include <stdlib.h>
 #include <curses.h>
 
-void sig_winch(int signo)
-{
-	struct winsize size;
-	ioctl(fileno(stdout), TIOCGWINSZ, (char *) &size);
-	resizeterm(size.ws_row, size.ws_col);
-}
+#include "window.h"
 
+/// - [ ] fileio.h / fileio.c
+/// 
+/// - [x] window.h
+/// - [ ] page.h
+/// - [ ] line.h
 
 int main(int argc, char ** argv)
 {
-	initscr();
-	signal(SIGWINCH, sig_winch);
-	cbreak();
-	noecho();
-	curs_set(0);
-	attron(A_BOLD);
+	InitWindow();
+    attron(A_BOLD);
 	move(5, 15);
 	printw("Hello, brave new curses world!\n");
 	attroff(A_BOLD);attron(A_BLINK);
