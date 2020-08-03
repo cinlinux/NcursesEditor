@@ -4,8 +4,10 @@
 #include <stdlib.h>
 #include <curses.h>
 
-#ifndef NCR_WINDOW_H
-#define NCR_WINDOW_H
+#ifndef NCRS_WINDOW_H
+#define NCRS_WINDOW_H
+
+//#define MAX_NAME_LEN 15
 
 void SigWinCH(int signo);
 void InitWindow();

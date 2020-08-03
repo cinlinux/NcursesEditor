@@ -12,9 +12,9 @@ void InitWindow()
 {
     initscr();
 	signal(SIGWINCH, SigWinCH);
-	cbreak();
-	noecho();
-	curs_set(0);
+//	cbreak();
+//	noecho();
+//	curs_set(0);
 }
 
 
