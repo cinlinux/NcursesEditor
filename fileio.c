@@ -13,8 +13,8 @@ off_t* OpenFile(FileIO* fio, int flags)
         perror(err);
         return errno;
     }
-    else if( *(*fio).path == NULL 
-           || (*fio).path == NULL)
+    else if( /*(*fio).path == NULL 
+           ||*/ (*fio).path == NULL)
     {
         errno = EFAULT;
         sprintf(err, "OpenFile:: path is NULL"); 
@@ -29,7 +29,7 @@ off_t* OpenFile(FileIO* fio, int flags)
             case ENOENT:
                 (*fio).fd = open( (*fio).path
                                 , O_CREAT | O_APPEND
-                                , S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_ISUID | S_ISGID);
+                                , S_IRUSR | S_IWUSR | S_IRGRP );
                 break;
             default:
                 sprintf(err, "OpenFile::%s", (*fio).path); 
@@ -42,13 +42,13 @@ off_t* OpenFile(FileIO* fio, int flags)
 
 off_t* WriteFile(FileIO* fio)
 {
-    OpenFile(&fio, O_APPEND);
-    ssize_t sizeIsRed = 0;
+    OpenFile(fio, O_APPEND | O_RDWR);
+    ssize_t sizeIsWrt = 0;
 
-//    if ( sizeIsRed = write( (*fio).fd, (*fio).buf, (*fio).sizeOfBuf) == -1 )
-//    {
-  //      return errno;
-  //  }
+    if ( sizeIsWrt = write( (*fio).fd, (*fio).buf, (*fio).sizeOfBuf) == -1 )
+    {
+        return errno;
+    }
     
    // *(*fio).cur = lseek( (*fio).fd, 0, SEEK_CUR);
     close( (*fio).fd );
