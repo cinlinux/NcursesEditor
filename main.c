@@ -2,26 +2,14 @@
 #include <sys/ioctl.h>
 #include <signal.h>
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+#include <sys/types.h>// for file orw
+#include <sys/stat.h>// for file orw
+#include <fcntl.h>// for file orw
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-
-//#include "window.h"
-//#include "dialog.h"
-//#include "fileio.h"
-
-/// - [ ] fileio.h / fileio.c
-/// 
-/// - [x] window.h
-/// - [ ] page.h
-/// - [ ] line.h
-
-#define MAX_NAME_LEN 15
+#include <unistd.h>// for cli
+#include <stdlib.h>// for cli
+#include <string.h>// for cli
+#include <stdio.h>// for cli
 
 int main(int argc, char ** argv)
 {
