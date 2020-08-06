@@ -1,13 +1,19 @@
 #include <termios.h>
 #include <sys/ioctl.h>
 #include <signal.h>
-#include <stdlib.h>
-#include <curses.h>
-#include <string.h>
 
-#include "window.h"
-#include "dialog.h"
-#include "fileio.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+//#include "window.h"
+//#include "dialog.h"
+//#include "fileio.h"
 
 /// - [ ] fileio.h / fileio.c
 /// 
@@ -19,47 +25,37 @@
 
 int main(int argc, char ** argv)
 {
-   WINDOW * wnd;
-   char name[MAX_NAME_LEN + 1];
+	int flags, opt;
+	int fd;
+	char **buf = (char**) malloc( sizeof(char*) );
 
-   InitWindow();
-   
-   curs_set(TRUE);
-   start_color();
-   refresh();
-   init_pair(1, COLOR_YELLOW, COLOR_BLUE);
-   wnd = newwin(5, 23, 2, 2);
-   wbkgd(wnd, COLOR_PAIR(1));
-   wattron(wnd, A_BOLD);
-   wprintw(wnd, "Enter your name...\n");
-   keypad(wnd, TRUE);
-    
-   	char *fileName = (char*) malloc(sizeof(char) * MAX_NAME_LEN+1);
+	while( (opt = getopt(argc, argv, "i:o:>:") ) != -1 )
+	{
+		switch(opt){
+			case '>':
+			case 'o':
+				fd = open( optarg, O_WRONLY);
+				buf[0] = (char*) malloc( sizeof(char) * 80 );
+				scanf("%s", buf[0]);
+				write(fd, buf[0], strlen(buf[0]));
+				close( fd );
+//				printf("filename: %s\n", optarg);
+				break;
+			case 'i':
+				fd = open( optarg, O_RDONLY);
+				buf[0] = (char*) malloc( sizeof(char) * 80 );
+				read(fd, buf[0], 80);
+				close( fd );
+				printf("%s\n", buf[0]);
+				break;
 
-	sprintf(fileName, "./test.txt");
+			default:
+				printf( "%s [-i <read filename>] [-o|> write filename>]", argv[0]); 
+				break;
+		}
 
-    FileIO fio;
-    fio.path = fileName;
-    fio.buf = (char*) malloc( sizeof(char) * MAX_NAME_LEN +1 );
+	}
 
-   wgetnstr(wnd, name, MAX_NAME_LEN);
-
-    sprintf( fio.buf, "%s", name);
-    fio.sizeOfBuf = strlen( name );
-    WriteFile(&fio);
-   name[MAX_NAME_LEN] = 0;
-   wprintw(wnd, "Hello, %s!", name);
-   wrefresh(wnd);
-   delwin(wnd);
-   curs_set(FALSE);
-   move(8, 4);
-   printw("Press any key to continue...");
-   refresh();
-
-//    DlgShowMsg( 5, 15, title, msg);
-//
-//getch();
-	endwin();
 	exit(EXIT_SUCCESS);
 }
 

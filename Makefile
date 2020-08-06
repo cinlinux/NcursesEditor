@@ -18,23 +18,26 @@ SRC=\
     fileio.c
 
 
-all: $(BIN) $(TARGET).out
+all: main.c
+	$(CC) -g $< -o catLike
+	
+#	$(BIN) $(TARGET).out
 
-$(TARGET).out: fileio.o dialog.o window.o main.o
-	$(CC) $(BIN)/*.o -o $@ -g -l $(LN)
-
-main.o: main.c $(HDR)
-	$(CC) $(CFLAGS) $(LN) $< -o $(BIN)/$@
-
-fileio.o: fileio.c fileio.h
-	$(CC) $(CFLAGS) $(LN) $< -o $(BIN)/$@
-
-dialog.o: dialog.c dialog.h
-	$(CC) $(CFLAGS) $(LN) $< -o $(BIN)/$@
-
-window.o: window.c window.h
-	$(CC) $(CFLAGS) $(LN) $< -o $(BIN)/$@
-
+#$(TARGET).out: fileio.o dialog.o window.o main.o
+#	$(CC) $(BIN)/*.o -o $@ -g -l $(LN)
+#
+#main.o: main.c $(HDR)
+#	$(CC) $(CFLAGS) $(LN) $< -o $(BIN)/$@
+#
+#fileio.o: fileio.c fileio.h
+#	$(CC) $(CFLAGS) $(LN) $< -o $(BIN)/$@
+#
+#dialog.o: dialog.c dialog.h
+#	$(CC) $(CFLAGS) $(LN) $< -o $(BIN)/$@
+#
+#window.o: window.c window.h
+#	$(CC) $(CFLAGS) $(LN) $< -o $(BIN)/$@
+#
 
 $(BIN):
 	mkdir ./bin
